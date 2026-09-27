@@ -13,7 +13,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ClientesRouteImport } from './routes/clientes'
 import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
 import { Route as ContratosRouteImport } from './routes/contratos'
+import { Route as NovoRouteImport } from './routes/novo'
 import { Route as PropostasRouteImport } from './routes/propostas'
+import { Route as DocumentoIdRouteImport } from './routes/documento.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -35,9 +37,19 @@ const ContratosRoute = ContratosRouteImport.update({
   path: '/contratos',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NovoRoute = NovoRouteImport.update({
+  id: '/novo',
+  path: '/novo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PropostasRoute = PropostasRouteImport.update({
   id: '/propostas',
   path: '/propostas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocumentoIdRoute = DocumentoIdRouteImport.update({
+  id: '/documento/$id',
+  path: '/documento/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -46,14 +58,18 @@ export interface FileRoutesByFullPath {
   '/clientes': typeof ClientesRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/contratos': typeof ContratosRoute
+  '/novo': typeof NovoRoute
   '/propostas': typeof PropostasRoute
+  '/documento/$id': typeof DocumentoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/clientes': typeof ClientesRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/contratos': typeof ContratosRoute
+  '/novo': typeof NovoRoute
   '/propostas': typeof PropostasRoute
+  '/documento/$id': typeof DocumentoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,20 +77,38 @@ export interface FileRoutesById {
   '/clientes': typeof ClientesRoute
   '/configuracoes': typeof ConfiguracoesRoute
   '/contratos': typeof ContratosRoute
+  '/novo': typeof NovoRoute
   '/propostas': typeof PropostasRoute
+  '/documento/$id': typeof DocumentoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/clientes' | '/configuracoes' | '/contratos' | '/propostas'
+  fullPaths:
+    | '/'
+    | '/clientes'
+    | '/configuracoes'
+    | '/contratos'
+    | '/novo'
+    | '/propostas'
+    | '/documento/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/clientes' | '/configuracoes' | '/contratos' | '/propostas'
+  to:
+    | '/'
+    | '/clientes'
+    | '/configuracoes'
+    | '/contratos'
+    | '/novo'
+    | '/propostas'
+    | '/documento/$id'
   id:
     | '__root__'
     | '/'
     | '/clientes'
     | '/configuracoes'
     | '/contratos'
+    | '/novo'
     | '/propostas'
+    | '/documento/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -82,7 +116,9 @@ export interface RootRouteChildren {
   ClientesRoute: typeof ClientesRoute
   ConfiguracoesRoute: typeof ConfiguracoesRoute
   ContratosRoute: typeof ContratosRoute
+  NovoRoute: typeof NovoRoute
   PropostasRoute: typeof PropostasRoute
+  DocumentoIdRoute: typeof DocumentoIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -115,11 +151,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContratosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/novo': {
+      id: '/novo'
+      path: '/novo'
+      fullPath: '/novo'
+      preLoaderRoute: typeof NovoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/propostas': {
       id: '/propostas'
       path: '/propostas'
       fullPath: '/propostas'
       preLoaderRoute: typeof PropostasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/documento/$id': {
+      id: '/documento/$id'
+      path: '/documento/$id'
+      fullPath: '/documento/$id'
+      preLoaderRoute: typeof DocumentoIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -130,7 +180,9 @@ const rootRouteChildren: RootRouteChildren = {
   ClientesRoute: ClientesRoute,
   ConfiguracoesRoute: ConfiguracoesRoute,
   ContratosRoute: ContratosRoute,
+  NovoRoute: NovoRoute,
   PropostasRoute: PropostasRoute,
+  DocumentoIdRoute: DocumentoIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
